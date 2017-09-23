@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 import co.clickapps.retrofittwo.glide.GlideApp;
 import co.clickapps.retrofittwo.realm.model.*;
 import co.clickapps.retrofittwo.realm.model.UserModel;
+import co.clickapps.retrofittwo.service.MyService;
 import co.clickapps.retrofittwo.service.MyServiceHelper;
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button =  findViewById(R.id.my_button);
         button.setOnClickListener(this);
         //init Realm.this should call only once,, and good place is in Application class.
-        Realm.init(this.getApplicationContext());
 
 
 
@@ -287,7 +287,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onCLick(View view) {
-        MyServiceHelper.getInstance(this).startMyService();
+//        MyServiceHelper.getInstance(this).startMyService();
+        Intent intent = new Intent(this,MyService.class);
+        startService(intent);
     }
 
     @Override
@@ -347,4 +349,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
+
 }

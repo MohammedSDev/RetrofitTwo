@@ -1,6 +1,7 @@
 package co.clickapps.retrofittwo.service;
 
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -15,6 +16,7 @@ import co.clickapps.retrofittwo.Client;
 import co.clickapps.retrofittwo.ErrorModel;
 import co.clickapps.retrofittwo.MainActivity;
 import co.clickapps.retrofittwo.RetrofitInterface;
+import co.clickapps.retrofittwo.UserModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +25,7 @@ import retrofit2.Response;
  * Created by clickapps on 22/9/17.
  */
 
-public class MyService extends IntentService {
+public class MyService extends Service {
 
     private static final String TAG = "mud";
     private IBinder iBinder;
@@ -39,67 +41,35 @@ public class MyService extends IntentService {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind: ");
-        return super.onBind(intent);
+//        return super.onBind(intent);
+        return null;
     }
 
     public MyService() {
-        super("frayS");
+//        super("frayS");
         Log.d(TAG, "MyService: ");
     }
 
-    @Override
-    protected void onHandleIntent(@Nullable final Intent intent) {
-
-        tryRetrofitTow();
-
-    }
+//    @Override
+//    protected void onHandleIntent(@Nullable final Intent intent) {
+//
+//        tryRetrofitTow();
+//
+//    }
 
     private void tryRetrofitTow() {
         RetrofitInterface build = Test.Build(RetrofitInterface.class, "http://www.imdb.com/list/ls033652811/");
 
-        Test.te(build.getUser(), 1, new CallBack() {
-            @Override
-            public <T> void onSuccess(T model, Response<T> response, int taskID, String message) {
-                Log.d(TAG, "onSuccess: no delay ok" + taskID);
 
-                for (int i = 0; i < 10; i++) {
-                    try {
-                        Thread.sleep(1000);
-                        Log.d(TAG, "onSuccess: no delay " + i);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public <T> void onfailed(ErrorModel model, String retrofitError, String message) {
-                Log.d(TAG, "onfailed: failed");
-            }
-        });
 
         build = Test.Build(RetrofitInterface.class);
-        Test.te(build.getUsers(), 2, new CallBack() {
-            @Override
-            public <T> void onSuccess(T model, Response<T> response, int taskID, String message) {
-                Log.d(TAG, "onSuccess: with delay ok" + taskID);
-
-
-                for (int i = 0; i < 10; i++) {
-                    try {
-                        Thread.sleep(1000);
-                        Log.d(TAG, "onSuccess:with delay " + i);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public <T> void onfailed(ErrorModel model, String retrofitError, String message) {
-                Log.d(TAG, "onfailed: failed");
-            }
-        });
+        try {
+            Response<UserModel> te = Test.te(build.getUsers());
+            Log.d(TAG, "tryRetrofitTow: userName: " + te.body().getData().getFirstName());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d(TAG, "tryRetrofitTow: Failde");
+        }
 
 
 //        RetrofitInterface build = Client.build(RetrofitInterface.class);
@@ -225,6 +195,10 @@ public class MyService extends IntentService {
                     callBack.onfailed(null, t.getMessage(), "Error");
                 }
             });
+        }
+
+        public static <T> Response<T> te(Call<T> call) throws IOException {
+            return call.execute();
         }
     }
 }
