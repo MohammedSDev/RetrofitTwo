@@ -1,13 +1,16 @@
 package co.clickapps.retrofittwo;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.annotation.UiThread;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +27,8 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import co.clickapps.retrofittwo.glide.GlideApp;
+import co.clickapps.retrofittwo.json.MyJson;
+import co.clickapps.retrofittwo.other.MyActivity;
 import co.clickapps.retrofittwo.realm.model.*;
 import co.clickapps.retrofittwo.realm.model.UserModel;
 import co.clickapps.retrofittwo.service.MyService;
@@ -36,12 +41,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends MyActivity implements View.OnClickListener {
 
     private String TAG = "mud";
     ImageView imageView;
     Button button;
     private BroadcastReceiver receiver;
+    private boolean visibility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +58,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
         //init Realm.this should call only once,, and good place is in Application class.
 
-
-
-//        glideTest();
+        Realm.init(this.getApplicationContext());
 
 
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void implementBroadCastReceiver() {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Toast.makeText(context, intent.getStringExtra("result"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "MainActivity.this", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"context", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onReceive: ");
             }
         };
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction("hhhhhhhhh.co");
+        filter.addAction("co.clickapps.retrofittwo.hhhhhhhhh.co");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver,filter);
+    }
+
+    //this to test ,is Toast will show from this activity when it's in stop state and second activity is come or not;
+    private void startActivityWithToast() {
+
+        startActivity(new Intent(this,Main2Activity.class));
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this, "show from MainActivity", Toast.LENGTH_SHORT).show();
+            }
+        },2000);
+
+        finish();
+    }
+
+    private void dialog() {
+        AlertDialog dialog =new AlertDialog.Builder(this)
+                .setView(R.layout.myactivity_layout)
+                .setCancelable(false)
+                .create();
+        dialog.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     private void glideTest() {
@@ -295,6 +328,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         onCLick(view);
+        visibility =!visibility;
+        showHideFrameLoading(visibility);
     }
 
 
@@ -341,15 +376,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (receiver != null) {
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-            receiver = null;
-        }
-
+    protected void onDestroy() {
+        super.onDestroy();
+//        if (receiver != null) {
+//            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+//            receiver = null;
+//        }
     }
-
-
-
 }
