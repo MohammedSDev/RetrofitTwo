@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">RetrofitTwo</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <!--Account kit-->
+    <string name="FACEBOOK_APP_ID">324623971343162</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">d3012e2ff85c722a04d8e9c1061d3e8e</string>
+    <string name="ak_login_protocol_scheme">ak324623971343162</string>
+
+
+    <string name="title_activity_social">SocialActivity</string>
 </resources>

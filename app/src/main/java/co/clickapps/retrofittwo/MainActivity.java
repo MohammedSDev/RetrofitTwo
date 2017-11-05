@@ -33,6 +33,7 @@ import co.clickapps.retrofittwo.realm.model.*;
 import co.clickapps.retrofittwo.realm.model.UserModel;
 import co.clickapps.retrofittwo.service.MyService;
 import co.clickapps.retrofittwo.service.MyServiceHelper;
+import co.clickapps.retrofittwo.social_media.SocialActivity;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmQuery;
@@ -59,6 +60,8 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
         //init Realm.this should call only once,, and good place is in Application class.
 
         Realm.init(this.getApplicationContext());
+
+        SocialActivity.startThisActivity(this);
 
 
 
