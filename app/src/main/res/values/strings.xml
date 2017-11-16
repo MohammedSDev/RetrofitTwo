@@ -6,7 +6,55 @@
     <string name="FACEBOOK_APP_ID">324623971343162</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">d3012e2ff85c722a04d8e9c1061d3e8e</string>
     <string name="ak_login_protocol_scheme">ak324623971343162</string>
+    <string name="fb_login_protocol_scheme">fb324623971343162</string>
 
+
+    <!--Twitter-->
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">CdFXiqIaBwVj8IGujwsNo5HuA</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">gpLhW5CbQhNrVY0iC5FteR8kXeDB2ojfMv54qGyBO9cvHwzfvX</string>
 
     <string name="title_activity_social">SocialActivity</string>
+    <string name="large_text" >
+        CollapsingToolbarLayout has the following features :
+Collapsing title :
+A Title that is larger when the layout is fully visible and becomes smaller when the layout is scrolled off the screen. setTitle(CharSequence)can be used to set the title .collapsedTextAppearance and expandedTextAppearance attributes are used to change the title appearance.
+
+Content scrim :
+A full-bleed scrim that will be shown or hidden when the scroll position has hit a certain threshold.We can change it using setContentScrim(Drawable).
+Status bar scrim:
+A scrim that will be shown or hidden behind the status bar when the scroll position hits a threshold value.
+setStatusBarScrim(Drawable) can be used to change this. This will work only on lollipop devices.
+Sample Application :
+
+1. Create a project on Android Studio with an Activity “ScrollingActivity” and its corresponding layout “activity_scrolling.xml” .
+You can see in the activity_scrolling.xml file that CoordinatorLayout is the base layout and AppbarLayout is working as parent layout of CollapsingToolbarLayout.
+
+Also we are using the palette library to change the Content Scrim and StatusBar Scrim color of the collapsing toolbar layout in the ScrollingActivity :
+
+i am 4 hours into this tutorial and my project cant find Palette, i put it in gradle dependacies and its driving me insane, i cloned your repository and it works just find, but when i do it in separate project, it just cant find it.
+“import android.support.v7.graphics.Palette;”
+        Your Dependencies are defined inside https://github.com/codevscolor/CollapsingToolbar/blob/master/app/build.gradle . Please update dependencies { } tab as shown in the file
+    up vote
+1
+down vote
+accepted
+Scrim: A thing that conceals or obscures something.
+
+As per Android CollapsingToolbarLayout:
+
+Content scrim: A full-bleed scrim which is show or hidden when the scroll position has hit a certain threshold. You can change this via setContentScrim(Drawable).
+
+You can use drawable as a scrim on top of the CollapsingToolbarLayouts content when it has been scrolled sufficiently off screen.
+
+app:contentScrim="YOUR_TOOLBAR_COLOR"
+Status bar scrim: A scrim which is show or hidden behind the status bar when the scroll position has hit a certain threshold. You can change this via setStatusBarScrim(Drawable). This only works on LOLLIPOP devices when we set to fit system windows.
+
+You can use drawable as a scrim for the status bar content when the CollapsingToolbarLayout has been scrolled sufficiently off screen.
+
+app:statusBarScrim="YOUR_STATUSBAR_COLOR"
+Hope this will help!
+
+Material Design is a design language introduced by Google a year ago, and represents the company’s bold attempt at creating a unified user experience across all devices and platforms. It’s marked with bold colours, a liberal but principled use of shadows to indicate UI layers, and smooth animations that provide a pretty pretty user experience on Android (and some Google apps on iOS).
+One thing about Material Design, however, has bugged me ever since it was introduced last year: Floating Action Buttons.
+    </string>
 </resources>

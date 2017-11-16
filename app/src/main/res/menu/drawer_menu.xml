@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/item_one"
+            android:title="item one"/>
+
+        <item
+            android:id="@+id/item_eight"
+            android:title="item eight" />
+
+        <item
+            android:id="@+id/item_two"
+            android:title="item two">
+            <menu>
+                <item
+                    android:id="@+id/item_two_one"
+                    android:title="item two one" />
+                <item
+                    android:id="@+id/item_two_tow"
+                    android:title="item two two" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/item_nine"
+            android:title="item nine" />
+
+    </group>
+
+    <group android:checkableBehavior="none" >
+
+        <item
+            android:id="@+id/item_four"
+            android:title="item four" />
+
+        <item
+            android:id="@+id/item_five"
+            android:title="item five" />
+
+        <item
+            android:id="@+id/item_six"
+            android:title="item six" />
+    </group>
+
+
+    <item
+        android:id="@+id/item_seven"
+        android:title="item seven" />
+</menu>

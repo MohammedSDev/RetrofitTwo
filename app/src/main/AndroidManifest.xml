@@ -30,6 +30,22 @@
 
         <!-- account kit -->
         <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
@@ -44,17 +60,33 @@
         <activity
             android:name=".social_media.SocialActivity"
             android:label="@string/title_activity_social"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.facebook.accountkit.ui.AccountKitEmailRedirectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/ak_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".social_media.FBActivity" />
+        <activity android:name=".social_media.TwitterActivity" />
+        <activity android:name=".social_media.GoogleSinginActivity" />
+
+        <!-- twitter BC receiver -->
+        <receiver
+            android:name=".MyResultReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS" />
+                <action android:name="com.twitter.sdk.android.tweetcomposer.UPLOAD_FAILURE" />
+                <action android:name="com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".design.DesignActivity"></activity>
     </application>
 
 </manifest>

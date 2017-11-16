@@ -8,4 +8,16 @@
     tools:context="co.clickapps.retrofittwo.social_media.SocialActivity"
     tools:showIn="@layout/activity_social">
 
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_login"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>

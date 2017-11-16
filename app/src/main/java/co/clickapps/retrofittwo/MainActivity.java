@@ -1,5 +1,6 @@
 package co.clickapps.retrofittwo;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,10 +23,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import co.clickapps.retrofittwo.design.DesignActivity;
 import co.clickapps.retrofittwo.glide.GlideApp;
 import co.clickapps.retrofittwo.json.MyJson;
 import co.clickapps.retrofittwo.other.MyActivity;
@@ -33,7 +36,9 @@ import co.clickapps.retrofittwo.realm.model.*;
 import co.clickapps.retrofittwo.realm.model.UserModel;
 import co.clickapps.retrofittwo.service.MyService;
 import co.clickapps.retrofittwo.service.MyServiceHelper;
+import co.clickapps.retrofittwo.social_media.GoogleSinginActivity;
 import co.clickapps.retrofittwo.social_media.SocialActivity;
+import co.clickapps.retrofittwo.social_media.TwitterActivity;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmQuery;
@@ -61,8 +66,7 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
 
         Realm.init(this.getApplicationContext());
 
-        SocialActivity.startThisActivity(this);
-
+        startAnyActivity(DesignActivity.class);
 
 
     }
@@ -335,6 +339,13 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
         showHideFrameLoading(visibility);
     }
 
+
+    public void startAnyActivity(Class<?> activity){
+        Intent x = new Intent(this,activity);
+        x.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        x.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(x);
+    }
 
     //this is the Controller,but I created it here.
     static class Test {

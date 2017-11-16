@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 //Realm
 apply plugin: 'realm-android'
+
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
@@ -11,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -72,6 +76,12 @@ dependencies {
 
     //Twitter
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
+    compile 'com.twitter.sdk.android:tweet-composer:3.1.1'
 
+
+    //GoogleSignIn
+    compile 'com.google.android.gms:play-services-auth:11.6.0'//last version:11.6.0,require update google service
 
 }
+//GoogleSignIn
+apply plugin: 'com.google.gms.google-services'

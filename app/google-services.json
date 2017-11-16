@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "301865693938",
+    "project_id": "retrofittow"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301865693938:android:bb1f828a7980d8f6",
+        "android_client_info": {
+          "package_name": "co.clickapps.retrofittwo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301865693938-gubnq8cf23irbj59q82ni9r4n43582bn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.clickapps.retrofittwo",
+            "certificate_hash": "aae369fe4a7af3cd9771d669def473dcaf29e504"
+          }
+        },
+        {
+          "client_id": "301865693938-slh2kaj2ulkfipkjrm7c0kks228f5uul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATzB-X4lFA1f4RKlrCZIxQxiTl2MhWfBc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
