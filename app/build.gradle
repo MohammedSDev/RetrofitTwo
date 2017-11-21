@@ -80,8 +80,11 @@ dependencies {
 
 
     //GoogleSignIn
-    compile 'com.google.android.gms:play-services-auth:11.6.0'//last version:11.6.0,require update google service
+    compile 'com.google.android.gms:play-services-auth:11.6.0'
+
+    //Google Cloud Message
+    compile 'com.google.android.gms:play-services-gcm:11.6.0'
 
 }
-//GoogleSignIn
+//GoogleSignIn & GCM
 apply plugin: 'com.google.gms.google-services'

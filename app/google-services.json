@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "301865693938",
-    "project_id": "retrofittow"
+    "firebase_url": "https://retrofittow.firebaseio.com",
+    "project_id": "retrofittow",
+    "storage_bucket": "retrofittow.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "301865693938-ukdf8svpe7tgo7iehp8busj4qhcj9mc1.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "301865693938-gubnq8cf23irbj59q82ni9r4n43582bn.apps.googleusercontent.com",
           "client_type": 1,
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301865693938-ukdf8svpe7tgo7iehp8busj4qhcj9mc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
