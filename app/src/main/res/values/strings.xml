@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RetrofitTwo</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="google_map_api">AIzaSyAFC44JX7Kfs0BxM8Ze6D_cQCxPgLzXjn0</string>
 
     <!--Account kit-->
     <string name="FACEBOOK_APP_ID">324623971343162</string>
@@ -14,7 +15,7 @@
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">gpLhW5CbQhNrVY0iC5FteR8kXeDB2ojfMv54qGyBO9cvHwzfvX</string>
 
     <string name="title_activity_social">SocialActivity</string>
-    <string name="large_text" >
+    <string name="large_text">
         CollapsingToolbarLayout has the following features :
 Collapsing title :
 A Title that is larger when the layout is fully visible and becomes smaller when the layout is scrolled off the screen. setTitle(CharSequence)can be used to set the title .collapsedTextAppearance and expandedTextAppearance attributes are used to change the title appearance.
@@ -57,4 +58,5 @@ Hope this will help!
 Material Design is a design language introduced by Google a year ago, and represents the company’s bold attempt at creating a unified user experience across all devices and platforms. It’s marked with bold colours, a liberal but principled use of shadows to indicate UI layers, and smooth animations that provide a pretty pretty user experience on Android (and some Google apps on iOS).
 One thing about Material Design, however, has bugged me ever since it was introduced last year: Floating Action Buttons.
     </string>
+    <string name="title_activity_my_map">MyMapActivity</string>
 </resources>

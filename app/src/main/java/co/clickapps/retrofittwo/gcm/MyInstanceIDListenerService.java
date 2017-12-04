@@ -7,6 +7,8 @@ import com.google.android.gms.iid.InstanceIDListenerService;
 
 /**
  * Created by clickapps on 20/11/17.
+ *
+ * listen to token changes, and if it happen.start service for get gcm token
  */
 
 public class MyInstanceIDListenerService extends InstanceIDListenerService {
@@ -21,9 +23,13 @@ public class MyInstanceIDListenerService extends InstanceIDListenerService {
         Log.d(TAG, "handleIntent: ");
     }
 
+
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
         Log.d(TAG, "onTokenRefresh: ");
+
+        Intent gcmIntent = new Intent(this, GetGcmTokenService.class);
+        startService(gcmIntent);
     }
 }

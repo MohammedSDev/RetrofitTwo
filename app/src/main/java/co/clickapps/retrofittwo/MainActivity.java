@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.UiThread;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
@@ -25,12 +28,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
 import co.clickapps.retrofittwo.design.DesignActivity;
+import co.clickapps.retrofittwo.downloadmanager.DownloadManagerHelper;
+import co.clickapps.retrofittwo.fragment.FragmentActivity;
+import co.clickapps.retrofittwo.gcm.GetGcmTokenService;
 import co.clickapps.retrofittwo.glide.GlideApp;
 import co.clickapps.retrofittwo.json.MyJson;
+import co.clickapps.retrofittwo.mymap.MyMapActivity;
 import co.clickapps.retrofittwo.other.MyActivity;
 import co.clickapps.retrofittwo.realm.model.*;
 import co.clickapps.retrofittwo.realm.model.UserModel;
@@ -54,6 +65,8 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
     Button button;
     private BroadcastReceiver receiver;
     private boolean visibility;
+    private DownloadManagerHelper helper;
+    private long downloadId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +75,39 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
         imageView = (ImageView) findViewById(R.id.image_main_activity);
         button =  findViewById(R.id.my_button);
         button.setOnClickListener(this);
+        imageView.setOnClickListener(this);
         //init Realm.this should call only once,, and good place is in Application class.
 
         Realm.init(this.getApplicationContext());
 
-        startAnyActivity(DesignActivity.class);
+
+        Intent gcmIntent = new Intent(this, GetGcmTokenService.class);
+        startService(gcmIntent);
 
 
+//        startAnyActivity(FragmentActivity.class);
+
+
+
+    }
+
+    private void download() {
+
+        helper = new DownloadManagerHelper(this);
+        Uri uri = Uri.parse("http://webneel.com/wallpaper/sites/default/files/images/05-2013/2%20beautiful%20car%20wallpaper.preview.jpg");
+//        Uri uri = Uri.parse("http://download.quranicaudio.com/quran/ahmed_ibn_3ali_al-3ajamy/001.mp3");
+//        Uri uri = Uri.parse("http://download.quranicaudio.com/quran/abu_bakr_ash-shatri_tarawee7/002.mp3");
+        downloadId = helper.downloadFile(uri);
+        helper.initializeReceiver(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                helper.CheckStatus(downloadId);
+                Log.d(TAG, "run: status: " + helper.getStatusText());
+                Log.d(TAG, "run: status: " + helper.getReasonText());
+
+            }
+        }, 5000);
     }
 
     private void implementBroadCastReceiver() {
@@ -335,10 +374,39 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         onCLick(view);
-        visibility =!visibility;
-        showHideFrameLoading(visibility);
+//        visibility =!visibility;
+//        showHideFrameLoading(visibility);
+
+        if (view.getId() == button.getId()) {
+            Log.d(TAG, "onClick: start download initialize...");
+            download();
+        } else if (view.getId() == imageView.getId()){
+            openDownloadFile(downloadId);
+        }
     }
 
+    private void openDownloadFile(long downloadId){
+        Uri uri = helper.showFileContent(downloadId);
+//        Bitmap bitmap = BitmapFactory.decodeFile(new File(uri.getPath()).getAbsolutePath());
+//        File image = new File(uri.getPath());
+//        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+//        Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(),bmOptions);
+
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        imageView.setImageBitmap(bitmap);
+
+    }
 
     public void startAnyActivity(Class<?> activity){
         Intent x = new Intent(this,activity);

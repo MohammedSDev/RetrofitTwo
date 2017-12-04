@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_two_container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tw__light_gray"
+    >
+
+    <TextView
+        android:id="@+id/text_view_tow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fragment 2"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/image_view_tow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:transitionName="target"
+            android:scaleType="fitXY"
+            android:src="@drawable/boy"
+            android:minHeight="270dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/tw__light_gray"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:text="@string/large_text"
+            />
+
+
+    </LinearLayout>
+
+</FrameLayout>

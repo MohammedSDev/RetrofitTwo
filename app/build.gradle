@@ -46,15 +46,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    /*    compile 'com.android.support:design:25.4.0'
-        compile 'com.android.support:support-compat:26.+'
-    Realm
-    just plugin and classpath
-     Retrofit & OkHttp
-     image loading library Glide itself
-            compile 'com.github.bumptech.glide:glide:4.1.1'
-        annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
-        compile 'com.android.support:support-v4:26.0.0-alpha1'*/
+    compile 'com.android.support:multidex:1.0.1'
+
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -64,27 +57,34 @@ dependencies {
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
-
     //FlexBox layout
     compile 'com.google.android:flexbox:0.3.1'
-
     //Account kit
     compile 'com.facebook.android:account-kit-sdk:4.27.0'
-
     //faceBook
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-
     //Twitter
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
     compile 'com.twitter.sdk.android:tweet-composer:3.1.1'
-
-
     //GoogleSignIn
     compile 'com.google.android.gms:play-services-auth:11.6.0'
-
     //Google Cloud Message
     compile 'com.google.android.gms:play-services-gcm:11.6.0'
+    //for map
+    compile 'com.google.android.gms:play-services:11.6.0'
+    //map cluster marker
+    compile 'com.google.maps.android:android-maps-utils:0.5+'
 
 }
 //GoogleSignIn & GCM
 apply plugin: 'com.google.gms.google-services'
+
+/*    compile 'com.android.support:design:25.4.0'
+            compile 'com.android.support:support-compat:26.+'
+        Realm
+        just plugin and classpath
+         Retrofit & OkHttp
+         image loading library Glide itself
+                compile 'com.github.bumptech.glide:glide:4.1.1'
+            annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+            compile 'com.android.support:support-v4:26.0.0-alpha1'*/
