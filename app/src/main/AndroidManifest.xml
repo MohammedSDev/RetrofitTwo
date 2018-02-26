@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
 
-        <!--<service-->
-            <!--android:name=".service.MyService"-->
-            <!--android:exported="false" />-->
+        <!-- <service -->
+        <!-- android:name=".service.MyService" -->
+        <!-- android:exported="false" /> -->
 
         <activity
             android:name=".Main2Activity"
@@ -147,9 +147,7 @@
             android:name=".mymap.MyMapActivity"
             android:label="@string/title_activity_my_map"
             android:theme="@style/AppTheme" />
-        <activity android:name=".fragment.FragmentActivity"></activity>
-
-
+        <activity android:name=".fragment.FragmentActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -160,6 +158,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fiep" />
         </provider>
+
+        <activity android:name=".service.ActivityOne" />
+        <activity android:name=".service.ActivityTwo" />
+        <activity
+            android:name=".realm.model.RealmActivity"
+            android:label="@string/title_activity_realm"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".rxjava.RxJavaActivity" />
+        <activity android:name=".rxjava.MvvmActivity"></activity>
     </application>
 
 </manifest>

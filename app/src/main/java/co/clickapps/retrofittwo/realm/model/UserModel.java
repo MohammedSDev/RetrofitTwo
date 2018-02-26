@@ -20,6 +20,19 @@ public class UserModel extends RealmObject {
     private RealmList<PhoneModel> phones;
 
 
+    //constructors
+
+
+    public UserModel() {
+    }
+
+    public UserModel(String id, String name, String birthDay, RealmList<PhoneModel> phones) {
+        this.id = id;
+        this.name = name;
+        this.birthDay = birthDay;
+        this.phones = phones;
+    }
+
     @Ignore
     private String age;
 

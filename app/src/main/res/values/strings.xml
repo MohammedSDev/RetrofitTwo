@@ -59,4 +59,5 @@ Material Design is a design language introduced by Google a year ago, and repres
 One thing about Material Design, however, has bugged me ever since it was introduced last year: Floating Action Buttons.
     </string>
     <string name="title_activity_my_map">MyMapActivity</string>
+    <string name="title_activity_realm">RealmActivity</string>
 </resources>

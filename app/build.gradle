@@ -30,13 +30,16 @@ android {
     }
 }
 apply plugin: 'com.android.application'
-//Realm
-//realm {
-//    syncEnabled = true;
-//}
+/*
+Realm
+realm {
+    syncEnabled = true;
+}
+*/
 
 repositories {
-    mavenCentral()//faceBook
+    //faceBook
+    mavenCentral()
     maven { url 'https://maven.google.com' }
 }
 
@@ -46,17 +49,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    /*Libraries*/
     compile 'com.android.support:multidex:1.0.1'
-
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    compile 'com.github.bumptech.glide:glide:4.1.1'
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+    /*Glide*/
+    compile 'com.github.bumptech.glide:glide:4.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
     //FlexBox layout
     compile 'com.google.android:flexbox:0.3.1'
     //Account kit
@@ -74,17 +78,25 @@ dependencies {
     compile 'com.google.android.gms:play-services:11.6.0'
     //map cluster marker
     compile 'com.google.maps.android:android-maps-utils:0.5+'
+    // ViewModel and LiveData
+    compile "android.arch.lifecycle:extensions:1.0.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
+
+    //RxJava
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.7'
+
 
 }
 //GoogleSignIn & GCM
 apply plugin: 'com.google.gms.google-services'
 
 /*    compile 'com.android.support:design:25.4.0'
-            compile 'com.android.support:support-compat:26.+'
-        Realm
-        just plugin and classpath
-         Retrofit & OkHttp
-         image loading library Glide itself
-                compile 'com.github.bumptech.glide:glide:4.1.1'
-            annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
-            compile 'com.android.support:support-v4:26.0.0-alpha1'*/
+    compile 'com.android.support:support-compat:26.+'
+Realm
+just plugin and classpath
+ Retrofit & OkHttp
+ image loading library Glide itself
+        compile 'com.github.bumptech.glide:glide:4.1.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+    compile 'com.android.support:support-v4:26.0.0-alpha1'*/

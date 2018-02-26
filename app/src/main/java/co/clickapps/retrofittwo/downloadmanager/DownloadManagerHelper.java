@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
-import android.support.v4.content.MimeTypeFilter;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
@@ -57,7 +56,7 @@ public class DownloadManagerHelper {
         return mDownloadManager.enqueue(req);
     }
 
-    public void CheckStatus(long downloadId) {
+    private Cursor checkStatus(long downloadId) {
 
         DownloadManager.Query ImageDownloadQuery = new DownloadManager.Query();
         //set the query filter to our previously Enqueued download
@@ -66,12 +65,16 @@ public class DownloadManagerHelper {
         //Query the download manager about downloads that have been requested.
         Cursor cursor = mDownloadManager.query(ImageDownloadQuery);
         if (cursor.moveToFirst()) {
-            DownloadStatus(cursor, downloadId);
+            return cursor;
         }
+        else
+            return null;
     }
 
-    private String DownloadStatus(Cursor cursor, long downloadId) {
-
+    public String getDownloadStatus( long downloadId) {
+        Cursor cursor = checkStatus(downloadId);
+        if (cursor == null)
+            return "Unknown Error";
         //column for download  status
         int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
         int status = cursor.getInt(columnIndex);
@@ -151,40 +154,58 @@ public class DownloadManagerHelper {
         return statusText;
     }
 
+    public int getPercentStatue(long downloadId){
+        Cursor cursor = checkStatus(downloadId);
+        if (cursor == null)
+            return -1;
+        double total = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+        double downloaded = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+        double l = (downloaded / total) * 100;
+        return (int) l;
+
+    }
+
     public void initializeReceiver(Context context){
-        unRegisterReceiver(context);
+//        unRegisterReceiver(context);
+        if (mDownloadReceiver == null) {
+            IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 
-        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+            mDownloadReceiver = new BroadcastReceiver() {
 
-        mDownloadReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
 
-            @Override
-            public void onReceive(Context context, Intent intent) {
+                    //check if the broadcast message is for our enqueued download
+                    long longExtra = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+                    Log.d("mud", "onReceive: complete download" + longExtra + "............................//$#%");
 
-                //check if the broadcast message is for our enqueued download
-                long longExtra = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                Log.d("mud", "onReceive: complete download"  + longExtra + "............................//$#%");
-
-            }
-        };
+                }
+            };
+            context.registerReceiver(mDownloadReceiver, filter);
+        }
 
         //user click on download progress
-        IntentFilter filterClick = new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED);
+        if (mDownloadClickReceiver == null) {
+            IntentFilter filterClick = new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED);
 
-        mDownloadClickReceiver = new BroadcastReceiver() {
+            mDownloadClickReceiver = new BroadcastReceiver() {
 
-            @Override
-            public void onReceive(Context context, Intent intent) {
+                @Override
+                public void onReceive(Context context, Intent intent) {
 
-                //check if the broadcast message is for our enqueued download
-                long longExtra = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                Log.d("mud", "onReceive: running download clicked "  + longExtra + "............................//$#%");
+                    //check if the broadcast message is for our enqueued download
+                    long [] ids  = (long[]) intent.getExtras().get(DownloadManager.EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS);
+                    if (ids.length > 0) {
+                        Log.d("mud", "onReceive: running download clicked " + ids[0] + "............................//$#%");
+                        Log.d(TAG, "onReceive: precent: " + getPercentStatue(ids[0]));
+                    } else
+                        Log.d(TAG, "onReceive: no id from download notificationn click");
+                }
+            };
 
-            }
-        };
 
-        context.registerReceiver(mDownloadReceiver, filter);
-        context.registerReceiver(mDownloadClickReceiver, filterClick);
+            context.registerReceiver(mDownloadClickReceiver, filterClick);
+        }
     }
 
     public void unRegisterReceiver(Context context) {

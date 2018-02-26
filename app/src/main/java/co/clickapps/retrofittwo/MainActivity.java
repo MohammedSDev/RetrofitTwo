@@ -1,19 +1,27 @@
 package co.clickapps.retrofittwo;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.UiThread;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,9 +50,12 @@ import co.clickapps.retrofittwo.gcm.GetGcmTokenService;
 import co.clickapps.retrofittwo.glide.GlideApp;
 import co.clickapps.retrofittwo.json.MyJson;
 import co.clickapps.retrofittwo.mymap.MyMapActivity;
+import co.clickapps.retrofittwo.notification.MyNotification;
 import co.clickapps.retrofittwo.other.MyActivity;
 import co.clickapps.retrofittwo.realm.model.*;
 import co.clickapps.retrofittwo.realm.model.UserModel;
+import co.clickapps.retrofittwo.rxjava.MvvmActivity;
+import co.clickapps.retrofittwo.rxjava.RxJavaActivity;
 import co.clickapps.retrofittwo.service.MyService;
 import co.clickapps.retrofittwo.service.MyServiceHelper;
 import co.clickapps.retrofittwo.social_media.GoogleSinginActivity;
@@ -85,7 +96,7 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
         startService(gcmIntent);
 
 
-//        startAnyActivity(FragmentActivity.class);
+        startAnyActivity(MvvmActivity.class);
 
 
 
@@ -94,17 +105,17 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
     private void download() {
 
         helper = new DownloadManagerHelper(this);
-        Uri uri = Uri.parse("http://webneel.com/wallpaper/sites/default/files/images/05-2013/2%20beautiful%20car%20wallpaper.preview.jpg");
+//        Uri uri = Uri.parse("http://webneel.com/wallpaper/sites/default/files/images/05-2013/2%20beautiful%20car%20wallpaper.preview.jpg");
 //        Uri uri = Uri.parse("http://download.quranicaudio.com/quran/ahmed_ibn_3ali_al-3ajamy/001.mp3");
-//        Uri uri = Uri.parse("http://download.quranicaudio.com/quran/abu_bakr_ash-shatri_tarawee7/002.mp3");
+        Uri uri = Uri.parse("http://download.quranicaudio.com/quran/abu_bakr_ash-shatri_tarawee7/002.mp3");
         downloadId = helper.downloadFile(uri);
         helper.initializeReceiver(this);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                helper.CheckStatus(downloadId);
-                Log.d(TAG, "run: status: " + helper.getStatusText());
-                Log.d(TAG, "run: status: " + helper.getReasonText());
+//                helper.CheckStatus(downloadId);
+//                Log.d(TAG, "run: status: " + helper.getStatusText());
+//                Log.d(TAG, "run: status: " + helper.getReasonText());
 
             }
         }, 5000);
@@ -371,6 +382,7 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
         startService(intent);
     }
 
+
     @Override
     public void onClick(View view) {
         onCLick(view);
@@ -380,9 +392,47 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
         if (view.getId() == button.getId()) {
             Log.d(TAG, "onClick: start download initialize...");
             download();
+//            notification();
+
         } else if (view.getId() == imageView.getId()){
-            openDownloadFile(downloadId);
+//            openDownloadFile(downloadId);
+            helper.getDownloadStatus(downloadId);
+            Log.d(TAG, "run: status: " + helper.getStatusText());
+            Log.d(TAG, "run: status: " + helper.getReasonText());
         }
+    }
+
+    private void notification() {
+        MyNotification myNotification = new MyNotification(this);
+        myNotification.createBasicNotification(R.drawable.ic_notifications_none
+                ,"My notification title My notification title My notification title My notification title My notification title My notification title"
+                ,"My Notification content text My Notification content text My Notification content text My Notification content text My Notification content text My Notification content text"
+        ,this);
+        Bitmap bitmap = ( (BitmapDrawable) ContextCompat.getDrawable(this,R.drawable.sd) ).getBitmap();
+        Bitmap bitmapIcon = ( (BitmapDrawable)ContextCompat.getDrawable(this,R.drawable.boy) ).getBitmap();
+//            Bitmap bitmap = getBitmapFromVectorDrawable(this,R.drawable.snapchat);
+        int color = ContextCompat.getColor(this,R.color.blue);
+
+
+        myNotification.setLargeIcon(bitmap,color);
+//            myNotification.bigTextStyle();
+        myNotification.bigPictureStyle(bitmapIcon,bitmap);
+        myNotification.showNotification();
+    }
+
+    public  Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
+        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            drawable = (DrawableCompat.wrap(drawable)).mutate();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
     }
 
     private void openDownloadFile(long downloadId){
@@ -416,7 +466,7 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
     }
 
     //this is the Controller,but I created it here.
-    static class Test {
+    public static class Test {
 
         private static String TAG = "test";
 
@@ -464,5 +514,12 @@ public class MainActivity extends MyActivity implements View.OnClickListener {
 //            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 //            receiver = null;
 //        }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        helper.unRegisterReceiver(this);
     }
 }
